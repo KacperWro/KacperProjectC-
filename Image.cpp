@@ -95,12 +95,42 @@ void Image::greyScale()
 }
 void Image::flipHorizontal()
 {
+    for (int y = 0; y < h; y++)
+    {
+        for (int x = 0; x < w/2; x++)
+        {
+            Rgb temp(this->pixels[x + y * w].r, this->pixels[x + y * w].g, this->pixels[x + y * w].b);
 
+            this->pixels[x + y * w].r = this->pixels[(w-1-x) + y * w].r;
+            this->pixels[x + y * w].g = this->pixels[(w-1-x) + y * w].g;
+            this->pixels[x + y * w].b = this->pixels[(w-1-x) + y * w].b;
+
+            this->pixels[(w-1-x) + y * w].r = temp.r;
+            this->pixels[(w-1-x) + y * w].g = temp.g;
+            this->pixels[(w-1-x) + y * w].b = temp.b;
+
+        }
+    }
 
 }
 void Image::flipVertically()
 {
+    for (int x = 0; x < w; x++)
+    {
+        for (int y = 0; y < h/2; y++)
+        {
+            Rgb temp(this->pixels[x + y * w].r, this->pixels[x + y * w].g, this->pixels[x + y * w].b);
 
+            this->pixels[x + y * w].r = this->pixels[x + (h-1-y) * w].r;
+            this->pixels[x + y * w].g = this->pixels[x + (h-1-y) * w].g;
+            this->pixels[x + y * w].b = this->pixels[x + (h-1-y) * w].b;
+
+            this->pixels[x + (h-1-y) * w].r = temp.r;
+            this->pixels[x + (h-1-y) * w].g = temp.g;
+            this->pixels[x + (h-1-y) * w].b = temp.b;
+
+        }
+    }
 
 }
 void Image::AdditionalFunction2()
