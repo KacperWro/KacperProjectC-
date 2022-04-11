@@ -72,7 +72,12 @@ void Image::filterBlue()
 }
 void Image::greyScale()
 {
-
+    for (int i = 0; i < w*h; i++)
+    {
+        this->pixels[i].r = (this->pixels[i].r * 0.3)  + (this->pixels[i].g * 0.59) +  (this->pixels[i].b * 0.11);
+        this->pixels[i].g = (this->pixels[i].r * 0.3)  + (this->pixels[i].g * 0.59) +  (this->pixels[i].b * 0.11);
+        this->pixels[i].b = (this->pixels[i].r * 0.3)  + (this->pixels[i].g * 0.59) +  (this->pixels[i].b * 0.11);
+    }
 }
 void Image::flipHorizontal()
 {
