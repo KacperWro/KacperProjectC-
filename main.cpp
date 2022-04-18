@@ -17,10 +17,11 @@ using namespace std;
 #define IDM_EDIT_FilterGreen 8
 #define IDM_EDIT_FilterBlue 9
 #define IDM_EDIT_Reset 10
-#define IDM_EDIT_AD1 11
-#define IDM_EDIT_AD2 12
-#define IDM_EDIT_AD3 13
-#define IDM_FILE_LOAD_RAW 14
+#define IDM_EDIT_MirrorHorizontal 11
+#define IDM_EDIT_MirrorVertical 12
+#define IDM_EDIT_AD2 13
+#define IDM_EDIT_AD3 14
+#define IDM_FILE_LOAD_RAW 15
 string current_file;
 string fileType;
 // The main window class name.
@@ -50,7 +51,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterGreen, L"&Show Only Green"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterBlue, L"&Show Only Blue"); // Copy this line to add
     AppendMenuW(Alter, MF_SEPARATOR, 0, NULL);
-    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD1, L"&Additional Function 1"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_MirrorHorizontal, L"&Mirror Horizontal"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_MirrorVertical, L"&Mirror Vertical"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD2, L"&Additional Function 2"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD3, L"&Additional Function 3"); // Copy this line to add
      // Copy this line to add
@@ -119,9 +121,13 @@ void processMenu(HWND hWnd, WPARAM wParam)
             image->load(current_file);
             image->filterBlue();
             break;
-        case IDM_EDIT_AD1:
+        case IDM_EDIT_MirrorHorizontal:
 
-            image->AdditionalFunction1();
+            image->MirrorHorizontal();
+            break;
+        case IDM_EDIT_MirrorVertical:
+
+            image->MirrorVertical();
             break;
         case IDM_EDIT_AD2:
 

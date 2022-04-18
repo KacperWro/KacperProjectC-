@@ -47,7 +47,8 @@ public:
     void greyScale();
     void flipHorizontal();
     void flipVertically();
-    void AdditionalFunction1();
+    void MirrorHorizontal();
+    void MirrorVertical();
     void AdditionalFunction2();
     void AdditionalFunction3();
 
