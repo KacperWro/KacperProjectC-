@@ -50,7 +50,7 @@ public:
     void MirrorHorizontal();
     void MirrorVertical();
     void filterSepia();
-    void AdditionalFunction3();
+    void NegativeFilter();
 
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();

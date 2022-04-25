@@ -211,9 +211,15 @@ void Image::filterSepia()
 
 
 }
-void Image::AdditionalFunction3()
+// Additional feature 3: Applying negative filter to image
+void Image::NegativeFilter()
 {
-
+    for (int i = 0; i < w*h; i++)
+    {
+        this->pixels[i].r = 255 - this->pixels[i].r;
+        this->pixels[i].g = 255 - this->pixels[i].g;
+        this->pixels[i].b = 255 - this->pixels[i].b;
+    }
 }
 
 /* Functions used by the GUI - DO NOT MODIFY */

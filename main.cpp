@@ -20,7 +20,7 @@ using namespace std;
 #define IDM_EDIT_MirrorHorizontal 11
 #define IDM_EDIT_MirrorVertical 12
 #define IDM_EDIT_FilterSepia 13
-#define IDM_EDIT_AD3 14
+#define IDM_EDIT_FilterNegative 14
 #define IDM_FILE_LOAD_RAW 15
 string current_file;
 string fileType;
@@ -54,7 +54,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_MirrorHorizontal, L"&Mirror Horizontal"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_MirrorVertical, L"&Mirror Vertical"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterSepia, L"Sepia Filter"); // Copy this line to add
-    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD3, L"&Additional Function 3"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterNegative, L"Negative Filter"); // Copy this line to add
      // Copy this line to add
 
 
@@ -133,9 +133,9 @@ void processMenu(HWND hWnd, WPARAM wParam)
 
             image->filterSepia();
             break;
-        case IDM_EDIT_AD3:
+        case IDM_EDIT_FilterNegative:
 
-            image->AdditionalFunction3();
+            image->NegativeFilter();
             break;
         case IDM_EDIT_Reset:
             if(fileType=="ppm")
