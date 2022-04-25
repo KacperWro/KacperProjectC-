@@ -49,7 +49,7 @@ public:
     void flipVertically();
     void MirrorHorizontal();
     void MirrorVertical();
-    void AdditionalFunction2();
+    void filterSepia();
     void AdditionalFunction3();
 
     /*Functions used in the GUI - DO NOT MODIFY */

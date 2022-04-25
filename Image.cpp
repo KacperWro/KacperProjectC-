@@ -166,8 +166,49 @@ void Image::MirrorVertical()
         }
     }
 }
-void Image::AdditionalFunction2()
+
+// Additional Feature 2: Applying Sepia filter to image
+void Image::filterSepia()
 {
+    double tr;
+    double tg;
+    double tb;
+
+    for (int i = 0; i < w*h; i++)
+    {
+        tr = (0.393 * this->pixels[i].r) + (0.769 * this->pixels[i].g) + (0.189 * this->pixels[i].b);
+        tg = (0.349 * this->pixels[i].r) + (0.686 * this->pixels[i].g) + (0.168 * this->pixels[i].b);
+        tb = (0.272 * this->pixels[i].r) + (0.534 * this->pixels[i].g) + (0.131 * this->pixels[i].b);
+
+        if(tr > 255)
+        {
+            this->pixels[i].r = 255;
+        }
+        else
+        {
+            this->pixels[i].r = tr;
+        }
+
+        if(tg > 255)
+        {
+            this->pixels[i].g = 255;
+        }
+        else
+        {
+            this->pixels[i].g = tg;
+        }
+
+        if(tb > 255)
+        {
+            this->pixels[i].b = 255;
+        }
+        else
+        {
+            this->pixels[i].b = tb;
+        }
+
+    }
+
 
 }
 void Image::AdditionalFunction3()
