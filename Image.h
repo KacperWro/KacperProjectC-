@@ -51,7 +51,9 @@ public:
     void MirrorVertical();
     void filterSepia();
     void NegativeFilter();
-
+    void GammaEncoding();
+    void advancedFeature();
+    void bit8();
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();
     int getWidth();

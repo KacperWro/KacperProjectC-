@@ -6,6 +6,8 @@
 #include <iomanip>
 #include <cstring>
 #include "Image.h"
+#include<cmath>
+
 
 
 
@@ -38,6 +40,27 @@ bool Image::load(string filename)
 }
 bool Image::loadRaw(string filename)
 {
+    ifstream in(filename);
+    if(in)
+    {
+        in >> w>> h;
+        pixels = new Rgb[w*h];
+        float r,g , b;
+        for(int i = 0; i < w*h;i++)
+        {
+            in >> r>>g>>b;
+
+//            this->pixels[i].r = (unsigned char)std::max(1.0f, powf(r, 1/2.2)*255);
+//            this->pixels[i].g = (unsigned char)std::max(1.0f, powf(g, 1/2.2)*255);
+//            this->pixels[i].b = (unsigned char)std::max(1.0f, powf(b, 1/2.2)*255);
+
+            this->pixels[i].r = (unsigned char)(r*255);
+            this->pixels[i].g = (unsigned char)(g*255);
+            this->pixels[i].b = (unsigned char)(b*255);
+        }
+        in.close();
+        return true;
+    }
     return false;
 }
 bool Image::savePPM(string filename)
@@ -84,6 +107,8 @@ void Image::filterBlue()
         this->pixels[i].r = 0;
     }
 }
+
+// https://www.baeldung.com/cs/convert-rgb-to-grayscale   3.3. Luminosity Method
 void Image::greyScale()
 {
     for (int i = 0; i < w*h; i++)
@@ -93,6 +118,8 @@ void Image::greyScale()
         this->pixels[i].b = (this->pixels[i].r * 0.3)  + (this->pixels[i].g * 0.59) +  (this->pixels[i].b * 0.11);
     }
 }
+
+// Horizontal and Vertical Flip: https://www.youtube.com/watch?v=Yn_8KXuBXMc&list=PLG5M8QIx5lkzdGkdYQeeCK__As6sI2tOY&index=7
 void Image::flipHorizontal()
 {
     for (int y = 0; y < h; y++)
@@ -168,6 +195,7 @@ void Image::MirrorVertical()
 }
 
 // Additional Feature 2: Applying Sepia filter to image
+// https://dyclassroom.com/image-processing-project/how-to-convert-a-color-image-into-sepia-image
 void Image::filterSepia()
 {
     double tr;
@@ -176,7 +204,7 @@ void Image::filterSepia()
 
     for (int i = 0; i < w*h; i++)
     {
-        tr = (0.393 * this->pixels[i].r) + (0.769 * this->pixels[i].g) + (0.189 * this->pixels[i].b);
+        tr = std::min(255.0, (0.393 * this->pixels[i].r) + (0.769 * this->pixels[i].g) + (0.189 * this->pixels[i].b));
         tg = (0.349 * this->pixels[i].r) + (0.686 * this->pixels[i].g) + (0.168 * this->pixels[i].b);
         tb = (0.272 * this->pixels[i].r) + (0.534 * this->pixels[i].g) + (0.131 * this->pixels[i].b);
 
@@ -211,7 +239,18 @@ void Image::filterSepia()
 
 
 }
+void Image::bit8()
+{
+    for (int i = 0; i < w*h; i++)
+    {
+        pixels[i].r = (pixels[i].r/64)*64;
+        pixels[i].g = (pixels[i].g/64)*64;
+        pixels[i].b = (pixels[i].b/64)*64;
+
+    }
+}
 // Additional feature 3: Applying negative filter to image
+// https://dyclassroom.com/image-processing-project/how-to-convert-a-color-image-into-negative
 void Image::NegativeFilter()
 {
     for (int i = 0; i < w*h; i++)
@@ -220,6 +259,59 @@ void Image::NegativeFilter()
         this->pixels[i].g = 255 - this->pixels[i].g;
         this->pixels[i].b = 255 - this->pixels[i].b;
     }
+}
+
+void Image::GammaEncoding()
+{
+    for (int i = 0; i < w*h; i++)
+    {
+        this->pixels[i].r = (unsigned char)(std::max(0.f, std::min(255.f, powf(pixels[i].r/255.0f, 1/2.2) * 255 + 0.5f)));
+        this->pixels[i].g = (unsigned char)(std::max(0.f, std::min(255.f, powf(pixels[i].g/255.0f, 1/2.2) * 255 + 0.5f)));
+        this->pixels[i].b = (unsigned char)(std::max(0.f, std::min(255.f, powf(pixels[i].b/255.0f, 1/2.2) * 255 + 0.5f)));
+
+    }
+
+//    for (int i = 0; i < w*h; i++)
+//    {
+//        this->pixels[i].r = pow(this->pixels[i].r 2.2;
+//        this->pixels[i].g = 2.2;
+//        this->pixels[i].b = 2.2;
+//    }
+
+//    for (int i = 0; i < w*h; i++)
+//    {
+//        this->pixels[i].r = (unsigned char)(std::max(0.f, std::min(255.f, powf(this->pixels[i].r, 1/2.2) * 255 + 0.5f)));
+//        this->pixels[i].g = (unsigned char)(std::max(0.f, std::min(255.f, powf(this->pixels[i].g, 1/2.2) * 255 + 0.5f)));
+//        this->pixels[i].b = (unsigned char)(std::max(0.f, std::min(255.f, powf(this->pixels[i].b, 1/2.2) * 255 + 0.5f)));
+//    }
+
+
+
+}
+void Image::advancedFeature() {
+
+
+    for (int y = 0; y < h; y++)
+    {
+        for (int x = 0; x < w/2; x++)
+        {
+            this->pixels[(w-1-x) + y * w].r = 0;
+            this->pixels[(w-1-x) + y * w].g = 0;
+            this->pixels[(w-1-x) + y * w].b = 0;
+        }
+    }
+
+    for (int x = 0; x < w; x++)
+    {
+        for (int y = 0; y < h/2; y++)
+        {
+            this->pixels[x + (h-1-y) * w].r = 0;
+            this->pixels[x + (h-1-y) * w].g = 0;
+            this->pixels[x + (h-1-y) * w].b = 0;
+
+        }
+    }
+
 }
 
 /* Functions used by the GUI - DO NOT MODIFY */
