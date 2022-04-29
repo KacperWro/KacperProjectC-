@@ -9,7 +9,7 @@
 #include<cmath>
 
 
-
+// Kacper Wroblewski D00227356
 
 bool Image::load(string filename)
 {

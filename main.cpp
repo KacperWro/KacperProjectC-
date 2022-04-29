@@ -4,6 +4,8 @@
 #include <map>
 #include "UsefulFunctions.h"
 
+// Kacper Wroblewski D00227356
+
 using namespace std;
 // Global variables
 #define IDM_FILE_SAVE 1

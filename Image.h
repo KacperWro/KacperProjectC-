@@ -5,6 +5,7 @@
 // Created by floodd on 11/02/2022.
 //
 
+// Kacper Wroblewski D00227356
 
 #ifndef SDLTEST_TGA_FILEHANDLER_H
 #define SDLTEST_TGA_FILEHANDLER_H
