@@ -7,7 +7,18 @@
 #include <cstring>
 #include "Image.h"
 #include<cmath>
+#define filterWidth 3
+#define filterHeight 3
 
+double filter[filterHeight][filterWidth] =
+{
+        0.0, 0.2,  0.0,
+        0.2, 0.2,  0.2,
+        0.0, 0.2,  0.0
+};
+
+double factor = 1.0;
+double bias = 0.0;
 
 // Kacper Wroblewski D00227356
 
@@ -79,7 +90,7 @@ bool Image::savePPM(string filename)
     }
 
     ofs.close();
-    return false;
+    return true;
 }
 
 
@@ -271,50 +282,40 @@ void Image::GammaEncoding()
 
     }
 
-//    for (int i = 0; i < w*h; i++)
-//    {
-//        this->pixels[i].r = pow(this->pixels[i].r 2.2;
-//        this->pixels[i].g = 2.2;
-//        this->pixels[i].b = 2.2;
-//    }
-
-//    for (int i = 0; i < w*h; i++)
-//    {
-//        this->pixels[i].r = (unsigned char)(std::max(0.f, std::min(255.f, powf(this->pixels[i].r, 1/2.2) * 255 + 0.5f)));
-//        this->pixels[i].g = (unsigned char)(std::max(0.f, std::min(255.f, powf(this->pixels[i].g, 1/2.2) * 255 + 0.5f)));
-//        this->pixels[i].b = (unsigned char)(std::max(0.f, std::min(255.f, powf(this->pixels[i].b, 1/2.2) * 255 + 0.5f)));
-//    }
-
-
-
-}
-void Image::advancedFeature() {
-
-
-    for (int y = 0; y < h; y++)
-    {
-        for (int x = 0; x < w/2; x++)
-        {
-            this->pixels[(w-1-x) + y * w].r = 0;
-            this->pixels[(w-1-x) + y * w].g = 0;
-            this->pixels[(w-1-x) + y * w].b = 0;
-        }
-    }
-
-    for (int x = 0; x < w; x++)
-    {
-        for (int y = 0; y < h/2; y++)
-        {
-            this->pixels[x + (h-1-y) * w].r = 0;
-            this->pixels[x + (h-1-y) * w].g = 0;
-            this->pixels[x + (h-1-y) * w].b = 0;
-
-        }
-    }
-
 }
 
-/* Functions used by the GUI - DO NOT MODIFY */
+// https://lodev.org/cgtutor/filtering.html#Introduction_
+void Image::blur() {
+    for(int x = 0; x < w; x++)
+    {
+        for(int y = 0; y < h; y++)
+        {
+            double red = 0.0, green = 0.0, blue = 0.0;
+
+            for(int filterY = 0; filterY < filterHeight; filterY++)
+            {
+                for(int filterX = 0; filterX < filterWidth; filterX++)
+                {
+                    int imageX = (x - filterWidth / 2 + filterX + w) % w;
+                    int imageY = (y - filterHeight / 2 + filterY + h) % h;
+                    red += this->pixels[(imageY * w) + imageX].r * filter[filterY][filterX];
+                    green += this->pixels[(imageY * w) + imageX].g * filter[filterY][filterX];
+                    blue += this->pixels[(imageY * w) + imageX].b * filter[filterY][filterX];
+                }
+            }
+            this->pixels[(y * w) + x].r = min(max(int(factor * red + bias), 0), 255);
+            this->pixels[(y * w) + x].g = min(max(int(factor * green + bias), 0), 255);
+            this->pixels[(y * w) + x].b = min(max(int(factor * blue + bias), 0), 255);
+        }
+
+
+    }
+}
+
+
+
+
+
 int Image::getWidth()
 {
     return w;

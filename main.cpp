@@ -26,7 +26,7 @@ using namespace std;
 #define IDM_EDIT_GammaEncoding 15
 #define IDM_FILE_LOAD_RAW 16
 #define IDM_FILE_8BIT 17
-#define IDM_EDIT_AdvancedFeature 18
+#define IDM_EDIT_Blur 18
 string current_file;
 string fileType;
 // The main window class name.
@@ -62,7 +62,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterNegative, L"Negative Filter"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_GammaEncoding, L"Gamma Encoding"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_FILE_8BIT, L"8-Bit"); // Copy this line to add
-    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AdvancedFeature, L"Advanced Feature"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_Blur, L"Blur"); // Copy this line to add
     // Copy this line to add
 
 
@@ -151,8 +151,8 @@ void processMenu(HWND hWnd, WPARAM wParam)
         case IDM_FILE_8BIT:
             image->bit8();
             break;
-        case IDM_EDIT_AdvancedFeature:
-            image->advancedFeature();
+        case IDM_EDIT_Blur:
+            image->blur();
             break;
         case IDM_EDIT_Reset:
             if(fileType=="ppm")

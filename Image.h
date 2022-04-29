@@ -53,7 +53,7 @@ public:
     void filterSepia();
     void NegativeFilter();
     void GammaEncoding();
-    void advancedFeature();
+    void blur();
     void bit8();
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();
