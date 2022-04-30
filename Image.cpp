@@ -18,7 +18,7 @@ double filter[filterHeight][filterWidth] =
 };
 
 double factor = 1.0;
-double bias = 0.0;
+double bias = 0.0; // Determines brightness of image
 
 // Kacper Wroblewski D00227356
 
